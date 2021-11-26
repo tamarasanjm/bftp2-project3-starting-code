@@ -3,8 +3,7 @@ package net.filmcity.app.controllers;
 import net.filmcity.app.domain.Movie;
 import net.filmcity.app.repositories.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,4 +21,15 @@ public class MoviesController {
     public List<Movie> allMovies() {
         return movieRepository.findAll();
     }
+
+    @GetMapping("/movies/{id}")
+    public Movie findCoder(@PathVariable Long id) {
+        return movieRepository.findById(id).orElseThrow(MovieNotFoundException::new);
+    }
+
+    @PostMapping("/movies")
+    public Movie addCoder(@RequestBody Movie movie) {
+        return movieRepository.save(movie);
+    }
+
 }
